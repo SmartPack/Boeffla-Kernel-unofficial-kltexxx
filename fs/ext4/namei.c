@@ -585,11 +585,8 @@ static int htree_dirblock_to_tree(struct file *dir_file,
 		if (ext4_check_dir_entry(dir, NULL, de, bh,
 				(block<<EXT4_BLOCK_SIZE_BITS(dir->i_sb))
 					 + ((char *)de - bh->b_data))) {
-			/* On error, skip the f_pos to the next block. */
-			dir_file->f_pos = (dir_file->f_pos |
-					(dir->i_sb->s_blocksize - 1)) + 1;
-			brelse(bh);
-			return count;
+			/* silently ignore the rest of the block */
+			break;
 		}
 		ext4fs_dirhash(de->name, de->name_len, hinfo);
 		if ((hinfo->hash < start_hash) ||
@@ -2056,9 +2053,9 @@ int ext4_orphan_del(handle_t *handle, struct inode *inode)
 	struct ext4_iloc iloc;
 	int err = 0;
 
-	if (!EXT4_SB(inode->i_sb)->s_journal &&
+	if ((!EXT4_SB(inode->i_sb)->s_journal) &&
 	    !(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ORPHAN_FS))
-		return 0;
+			return 0;
 
 	mutex_lock(&EXT4_SB(inode->i_sb)->s_orphan_lock);
 	if (list_empty(&ei->i_orphan))
