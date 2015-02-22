@@ -25,12 +25,10 @@
 modules.builtin
 *.elf
 *.bin
-*.gz
 *.bz2
 *.lzma
 *.xz
 *.lzo
-*.patch
 *.gcno
 
 #
