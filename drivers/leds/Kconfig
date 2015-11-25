@@ -633,6 +633,12 @@ config LEDS_KTD2026
 	  KTD2026 is a fully programmable, constant current
 	  three channel LED driver with flexible control interface.
 
+config BOEFFLA_TOUCH_KEY_CONTROL
+	bool "Boeffla touchkey control driver"
+	depends on LEDS_CLASS
+	help
+	  Boeffla touchkey control driver to control touch key backlight
+
 comment "iptables trigger is under Netfilter config (LED target)"
 	depends on LEDS_TRIGGERS
 
