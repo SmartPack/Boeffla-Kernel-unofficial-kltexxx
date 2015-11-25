@@ -31,7 +31,7 @@
 #define LED_OFF				0
 #define LED_ON				1
 
-#define BTK_CONTROL_VERSION 	"1.1.0"
+#define BTK_CONTROL_VERSION 	"1.1.1"
 
 
 /*****************************************/
@@ -41,4 +41,4 @@
 void btkc_store_handle(struct cypress_touchkey_info *info);
 int btkc_block_touchkey_backlight(int state);
 void btkc_touch(void);
-
+void btkc_touch_home_key(void);

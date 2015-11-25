@@ -18,6 +18,9 @@
 /*
  * Change log:
  *
+ * 1.1.1 (25.11.2015)
+ *	- Special handling for home button
+ *
  * 1.1.0 (31.07.2015)
  *	- Initial version
  *
@@ -64,6 +67,8 @@
 
 int btkc_mode    = MODE_NORMAL;		// normal mode is default
 int btkc_timeout = TIMEOUT_DEFAULT;	// default is rom controlled timeout
+
+int home_key_pressed = 0;
 
 struct cypress_touchkey_info *touch_led = NULL;
 
@@ -113,6 +118,11 @@ static int lcd_notifier_callback(struct notifier_block *this,
 			break;
 
 		case LCD_EVENT_ON_END:
+			// if home key was pressed and display gets activated, enable
+			// touch key lights by simulating another "touch" event
+			if(home_key_pressed != 0)
+				btkc_touch();
+			home_key_pressed = 0;
 			break;
 
 		default:
@@ -145,6 +155,23 @@ void btkc_touch()
 		cancel_delayed_work(&led_work);
 		schedule_delayed_work(&led_work, msecs_to_jiffies(btkc_timeout * 1000));
 	}
+}
+
+void btkc_touch_home_key()
+{
+	pr_debug("Boeffla touch key control: touch detected\n");
+
+	// no special handling when not in touchkey_only mode
+	if (btkc_mode != MODE_TOUCHKEY_ONLY)
+		return;
+
+	// we record, the homekey was pressed, so the touch led will
+	// get enabled when display is activated next time
+	home_key_pressed = 1;
+	
+	// just in case the display was already on, switch on touchkey lights
+	// to cover for home key touches during work
+	btkc_touch();
 }
 
 int btkc_block_touchkey_backlight(int state)

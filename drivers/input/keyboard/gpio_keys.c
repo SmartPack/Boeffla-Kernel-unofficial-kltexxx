@@ -34,6 +34,9 @@
 #include <mach/sec_debug.h>
 #endif
 #include <linux/regulator/consumer.h>
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+void btkc_touch_home_key(void);
+#endif
 
 /* if you want to check gpio status continually use this */
 #if 0
@@ -515,6 +518,11 @@ static void gpio_keys_gpio_report_event(struct gpio_button_data *bdata)
 		input_event(input, type, button->code, !!state);
 	}
 	input_sync(input);
+	
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+	if ((button->code == 172) && (state != 0)) // check if home button was pressed
+		btkc_touch_home_key();
+#endif
 }
 
 static void gpio_keys_gpio_work_func(struct work_struct *work)
