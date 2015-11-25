@@ -4927,7 +4927,13 @@ config PVS_LEVEL_INTERFACE
 	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
 	help
 	 Allow PVS level to be shown in Boeffla-Config app
-	  
+
+config CHARGE_LEVEL
+	bool "Charge level interface"
+	default y
+	help
+	  Allows configuration of ac, usb and wireless charging levels
+
 endif
 
 config KERNEL_TEXT_MPU_PROT
