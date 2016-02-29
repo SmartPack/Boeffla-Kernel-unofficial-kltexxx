@@ -24,7 +24,7 @@ extern int charge_stock_logic;
 
 #define AC_CHARGE_LEVEL_DEFAULT 0	// stock charge logic is default
 #define AC_CHARGE_LEVEL_MIN 0
-#define AC_CHARGE_LEVEL_MAX 2200
+#define AC_CHARGE_LEVEL_MAX 2000
 
 #define USB_CHARGE_LEVEL_DEFAULT 0	// stock charge logic is default
 #define USB_CHARGE_LEVEL_MIN 0
@@ -32,5 +32,5 @@ extern int charge_stock_logic;
 
 #define WIRELESS_CHARGE_LEVEL_DEFAULT 0	// stock charge logic is default
 #define WIRELESS_CHARGE_LEVEL_MIN 0
-#define WIRELESS_CHARGE_LEVEL_MAX 1000
+#define WIRELESS_CHARGE_LEVEL_MAX 1600
 
