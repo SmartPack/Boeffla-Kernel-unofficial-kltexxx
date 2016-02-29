@@ -123,13 +123,19 @@ static ssize_t charge_info_show(struct kobject *kobj, struct kobj_attribute *att
 		if (charge_level_nom == 0)
 			return sprintf(buf, "No charger");
 		else
-			return sprintf(buf, "%s: %d (SL) mA", charge_info_text, charge_level_cur);
+		{
+			pr_info("Boeffla-Kernel: current charge current is %d mA (SL)", charge_level_cur);
+			return sprintf(buf, "%s: SL", charge_info_text);
+		}
 	
 	else
 		if (charge_level_nom == 0)
 			return sprintf(buf, "No charger");
 		else
-			return sprintf(buf, "%s: %d (%d) mA", charge_info_text, charge_level_cur, charge_level_nom);
+		{
+			pr_info("Boeffla-Kernel: current charge current is %d mA", charge_level_cur);
+			return sprintf(buf, "%s: %d mA", charge_info_text, charge_level_nom);
+		}
 }
 
 
