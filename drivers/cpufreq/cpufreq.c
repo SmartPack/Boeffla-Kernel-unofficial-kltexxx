@@ -596,11 +596,13 @@ static ssize_t store_scaling_min_freq(struct cpufreq_policy *policy, const char 
 		if (new_policy.min < min_freq_hardlimit[policy->cpu])
 			new_policy.min = min_freq_hardlimit[policy->cpu];
 
+	policy->user_policy.min = new_policy.min;
+	new_policy.user_policy.min = new_policy.min;
+
 	ret = cpufreq_driver->verify(&new_policy);
 	if (ret)
 		pr_err("cpufreq: Frequency verification failed\n");
 
-	policy->user_policy.min = new_policy.min;
 	ret = __cpufreq_set_policy(policy, &new_policy);
 
 	return ret ? ret : count;
@@ -628,11 +630,13 @@ static ssize_t store_scaling_max_freq(struct cpufreq_policy *policy, const char 
 		if (new_policy.max > max_freq_hardlimit[policy->cpu])
 			new_policy.max = max_freq_hardlimit[policy->cpu];
 
+	policy->user_policy.max = new_policy.max;
+	new_policy.user_policy.max = new_policy.max;
+
 	ret = cpufreq_driver->verify(&new_policy);
 	if (ret)
 		pr_err("cpufreq: Frequency verification failed\n");
 
-	policy->user_policy.max = new_policy.max;
 	ret = __cpufreq_set_policy(policy, &new_policy);
 
 	return ret ? ret : count;
