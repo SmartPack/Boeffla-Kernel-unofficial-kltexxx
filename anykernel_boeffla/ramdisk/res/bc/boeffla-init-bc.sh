@@ -3,7 +3,7 @@
 # ************************************
 # BC-based initialization
 #
-# SM-G900F CM13 version
+# SM-G900F Lineage14 version
 #
 # V0.1
 # ************************************
@@ -83,7 +83,7 @@
 
 	echo $(date) Boeffla-Kernel default settings 1 applied >> $BOEFFLA_LOGFILE
 
-# init.d support (enabler only to be considered for CM based roms)
+# init.d support (enabler only to be considered for Lineage based roms)
 # (zipalign scripts will not be executed as only exception)
 	if [ -f $INITD_ENABLER ] ; then
 		echo $(date) Execute init.d scripts start >> $BOEFFLA_LOGFILE

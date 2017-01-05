@@ -3,7 +3,7 @@
 # Boeffla-Config controller interface
 #
 # *************************************
-# SM-G900F CM13 version
+# SM-G900F Lineage14 version
 #
 # V0.1
 # *************************************
@@ -13,7 +13,7 @@
 # ********************************
 
 # kernel specification (hardware; type; target; url)
-KERNEL_SPECS="g900f;cm;cm14.0;http://kernel.boeffla.de/sgs5/boeffla-kernel-cm/;boeffla-kernel-#VERSION#-CM14.1-g900f-anykernel.recovery.zip"
+KERNEL_SPECS="g900f;cm;cm14.0;http://kernel.boeffla.de/sgs5/boeffla-kernel-cm/;boeffla-kernel-#VERSION#-Lineage14.1-g900f-anykernel.recovery.zip"
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
