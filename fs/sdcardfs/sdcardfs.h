@@ -75,6 +75,7 @@
 		(x)->i_mode = ((x)->i_mode & S_IFMT) | get_mode(SDCARDFS_I(x));\
 	} while (0)
 
+
 /* OVERRIDE_CRED() and REVERT_CRED()
  * 	OVERRID_CRED()
  * 		backup original task->cred
@@ -322,6 +323,35 @@ static inline void sdcardfs_put_reset_##pname(const struct dentry *dent) \
 SDCARDFS_DENT_FUNC(lower_path)
 SDCARDFS_DENT_FUNC(orig_path)
 
+/* grab a refererence if we aren't linking to ourself */
+static inline void set_top(struct sdcardfs_inode_info *info, struct inode *top)
+{
+	struct inode *old_top = NULL;
+	BUG_ON(IS_ERR_OR_NULL(top));
+	if (info->top && info->top != &info->vfs_inode) {
+		old_top = info->top;
+	}
+	if (top != &info->vfs_inode)
+		igrab(top);
+	info->top = top;
+	iput(old_top);
+}
+
+static inline struct inode *grab_top(struct sdcardfs_inode_info *info)
+{
+	struct inode *top = info->top;
+	if (top) {
+		return igrab(top);
+	} else {
+		return NULL;
+	}
+}
+
+static inline void release_top(struct sdcardfs_inode_info *info)
+{
+	iput(info->top);
+}
+
 static inline int get_gid(struct sdcardfs_inode_info *info) {
 	struct sdcardfs_sb_info *sb_info = SDCARDFS_SB(info->vfs_inode.i_sb);
 	if (sb_info->options.gid == AID_SDCARD_RW) {
@@ -338,7 +368,7 @@ static inline int get_gid(struct sdcardfs_inode_info *info) {
 static inline int get_mode(struct sdcardfs_inode_info *info) {
 	int owner_mode;
 	int filtered_mode;
-	struct sdcardfs_sb_info *sb_info = SDCARDFS_SB(info->vfs_inode.i_sb);
+	struct sdcardfs_sb_info * sb_info = SDCARDFS_SB(info->vfs_inode.i_sb);
 	int visible_mode = 0775 & ~sb_info->options.mask;
 
 	if (info->perm == PERM_PRE_ROOT) {
@@ -397,7 +427,7 @@ extern struct mutex sdcardfs_super_list_lock;
 extern struct list_head sdcardfs_super_list;
 
 /* for packagelist.c */
-extern appid_t get_appid(void *pkgl_id, const char *app_name);
+extern appid_t get_appid(const char *app_name);
 extern int check_caller_access_to_name(struct inode *parent_node, const char* name);
 extern int open_flags_to_access_mode(int open_flags);
 extern int packagelist_init(void);
