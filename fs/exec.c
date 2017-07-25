@@ -1154,7 +1154,7 @@ EXPORT_SYMBOL(flush_old_exec);
 
 void would_dump(struct linux_binprm *bprm, struct file *file)
 {
-	if (inode_permission(file->f_path.dentry->d_inode, MAY_READ) < 0)
+	if (inode_permission2(file->f_path.mnt, file->f_path.dentry->d_inode, MAY_READ) < 0)
 		bprm->interp_flags |= BINPRM_FLAGS_ENFORCE_NONDUMP;
 }
 EXPORT_SYMBOL(would_dump);
@@ -1511,6 +1511,7 @@ static int do_execve_common(const char *filename,
 	bool clear_in_exec;
 	int retval;
 	const struct cred *cred = current_cred();
+	bool is_su;
 
 	/*
 	 * We move the actual failure in case of RLIMIT_NPROC excess from
@@ -1587,11 +1588,14 @@ static int do_execve_common(const char *filename,
 	if (retval < 0)
 		goto out;
 
+	/* search_binary_handler can release file and it may be freed */
+	is_su = d_is_su(file->f_dentry);
+
 	retval = search_binary_handler(bprm,regs);
 	if (retval < 0)
 		goto out;
 
-	if (d_is_su(file->f_dentry) && capable(CAP_SYS_ADMIN)) {
+	if (is_su && capable(CAP_SYS_ADMIN)) {
 		current->flags |= PF_SU;
 		su_exec();
 	}
