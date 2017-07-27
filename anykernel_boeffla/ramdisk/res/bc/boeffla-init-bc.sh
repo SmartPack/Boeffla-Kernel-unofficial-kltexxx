@@ -65,6 +65,11 @@
 	/sbin/busybox rm -f $BUSYBOX_ENABLER
 	/sbin/busybox rm -f $FRANDOM_ENABLER
 
+# execute the early startconfig script, if it exists
+	if [ -f $BOEFFLA_STARTCONFIG_EARLY ]; then
+	. $BOEFFLA_STARTCONFIG_EARLY
+	fi
+
 # disable default zRam if configured
 	if [ -f $DISABLE_DEFAULT_ZRAM ]; then
 		busybox swapoff /dev/block/zram0
