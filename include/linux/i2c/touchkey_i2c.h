@@ -17,6 +17,18 @@ extern struct class *sec_class;
 extern int poweroff_charging;
 #endif
 
+/* DVFS feature : TOUCH BOOSTER */
+#define TSP_BOOSTER
+#ifdef TSP_BOOSTER
+#include <linux/cpufreq.h>
+
+#define DVFS_STAGE_DUAL		2
+#define DVFS_STAGE_SINGLE		1
+#define DVFS_STAGE_NONE		0
+#define TOUCH_BOOSTER_OFF_TIME	500
+#define TOUCH_BOOSTER_CHG_TIME	500
+#endif
+
 #include <linux/input.h>
 #include <linux/earlysuspend.h>
 #include <linux/mutex.h>
@@ -321,6 +333,16 @@ struct cypress_touchkey_info {
 	bool enabled_1mm;
 #endif
 
+#ifdef TSP_BOOSTER
+	struct delayed_work	work_dvfs_off;
+	struct delayed_work	work_dvfs_chg;
+	struct mutex		dvfs_lock;
+	bool dvfs_lock_status;
+	int dvfs_old_stauts;
+	int dvfs_boost_mode;
+	int dvfs_freq;
+#endif
+
 #ifdef TK_INFORM_CHARGER
 	struct touchkey_callbacks callbacks;
 	bool charging_mode;
@@ -338,7 +360,6 @@ struct cypress_touchkey_info {
 
 	u8	touchkeyid;
 	bool	support_fw_update;
-	atomic_t	keypad_enable;
 	bool	do_checksum;
 	struct wake_lock fw_wakelock;
 };

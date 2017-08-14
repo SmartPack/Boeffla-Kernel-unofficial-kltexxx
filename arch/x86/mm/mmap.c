@@ -69,17 +69,14 @@ static unsigned long mmap_rnd(void)
 {
 	unsigned long rnd = 0;
 
-	/*
-	*  8 bits of randomness in 32bit mmaps, 20 address space bits
-	* 28 bits of randomness in 64bit mmaps, 40 address space bits
-	*/
 	if (current->flags & PF_RANDOMIZE) {
- #ifdef CONFIG_COMPAT
+		if (mmap_is_ia32())
+#ifdef CONFIG_COMPAT
 			rnd = get_random_long() & ((1UL << mmap_rnd_compat_bits) - 1);
- #else
+#else
 			rnd = get_random_long() & ((1UL << mmap_rnd_bits) - 1);
- #endif
- 		else
+#endif
+		else
 			rnd = get_random_long() & ((1UL << mmap_rnd_bits) - 1);
 	}
 	return rnd << PAGE_SHIFT;

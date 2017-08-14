@@ -30,8 +30,8 @@
 #include <linux/mempolicy.h>
 #include <linux/vmalloc.h>
 #include <linux/security.h>
-#include <linux/backing-dev.h>
 #include <linux/memcontrol.h>
+#include <linux/backing-dev.h>
 #include <linux/syscalls.h>
 #include <linux/hugetlb.h>
 #include <linux/gfp.h>
@@ -296,9 +296,9 @@ static int migrate_page_move_mapping(struct address_space *mapping,
 		struct page *newpage, struct page *page,
 		struct buffer_head *head, enum migrate_mode mode)
 {
+	int expected_count;
 	struct zone *oldzone, *newzone;
 	int dirty;
-	int expected_count;
 	void **pslot;
 
 	if (!mapping) {

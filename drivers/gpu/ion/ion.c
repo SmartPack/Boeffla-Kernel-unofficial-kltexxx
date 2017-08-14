@@ -1393,7 +1393,7 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		if (copy_from_user(&data, (void __user *)arg,
 				   sizeof(struct ion_handle_data)))
 			return -EFAULT;
-		mutex_lock(&client->lock);
+		mutex_lock(&client->lock);	
 		handle = ion_handle_get_by_id_nolock(client, (int)data.handle);
 		if (IS_ERR(handle)) {
 			mutex_unlock(&client->lock);
@@ -1401,7 +1401,7 @@ static long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		}
 		ion_free_nolock(client, handle);
 		ion_handle_put_nolock(handle);
-		mutex_unlock(&client->lock);
+		mutex_unlock(&client->lock);	
 		break;
 	}
 	case ION_IOC_SHARE:

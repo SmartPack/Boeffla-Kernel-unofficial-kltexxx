@@ -606,7 +606,8 @@ static __always_inline int __vfs_follow_link(struct nameidata *nd, const char *l
 		goto fail;
 
 	if (*link == '/') {
-		set_root(nd);
+		if (!nd->root.mnt)
+			set_root(nd);
 		path_put(&nd->path);
 		nd->path = nd->root;
 		path_get(&nd->root);
@@ -1357,7 +1358,8 @@ static inline int walk_component(struct nameidata *nd, struct path *path,
 	}
 	if (should_follow_link(inode, follow)) {
 		if (nd->flags & LOOKUP_RCU) {
-			if (unlikely(unlazy_walk(nd, path->dentry))) {
+			if (unlikely(nd->path.mnt != path->mnt ||
+				     unlazy_walk(nd, path->dentry))) {
 				terminate_walk(nd);
 				return -ECHILD;
 			}
@@ -2991,8 +2993,6 @@ static long do_unlinkat(int dfd, const char __user *pathname)
 	struct dentry *dentry;
 	struct nameidata nd;
 	struct inode *inode = NULL;
-	char *path_buf = NULL;
-	char *propagate_path = NULL;
 
 	error = user_path_parent(dfd, pathname, &nd, &name);
 	if (error)
@@ -3014,10 +3014,6 @@ static long do_unlinkat(int dfd, const char __user *pathname)
 		inode = dentry->d_inode;
 		if (!inode)
 			goto slashes;
-		if (inode->i_sb->s_op->unlink_callback) {
-			path_buf = kmalloc(PATH_MAX, GFP_KERNEL);
-			propagate_path = dentry_path_raw(dentry, path_buf, PATH_MAX);
-		}
 		ihold(inode);
 		error = mnt_want_write(nd.path.mnt);
 		if (error)
@@ -3032,13 +3028,6 @@ exit3:
 		dput(dentry);
 	}
 	mutex_unlock(&nd.path.dentry->d_inode->i_mutex);
-	if (path_buf && !error) {
-		inode->i_sb->s_op->unlink_callback(inode->i_sb, propagate_path);
-	}
-	if (path_buf) {
-		kfree(path_buf);
-		path_buf = NULL;
-	}
 	if (inode)
 		iput(inode);	/* truncate the inode here */
 exit1:

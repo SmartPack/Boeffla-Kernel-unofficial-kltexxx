@@ -932,7 +932,7 @@ int f_midi_bind_config(struct usb_configuration *c,
 			      unsigned int out_ports,
 			      unsigned int buflen,
 			      unsigned int qlen,
-			      struct midi_alsa_config *config)
+                  struct midi_alsa_config* config)
 {
 	struct f_midi *midi;
 	int status, i;
@@ -995,6 +995,7 @@ int f_midi_bind_config(struct usb_configuration *c,
 	config->card = midi->rmidi->card->number;
 	config->device = midi->rmidi->device;
 	}
+
 
 	if (config) {
 		config->card = midi->rmidi->card->number;

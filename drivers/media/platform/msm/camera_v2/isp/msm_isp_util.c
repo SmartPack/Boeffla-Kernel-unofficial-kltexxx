@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -510,8 +510,8 @@ static int msm_isp_send_hw_cmd(struct vfe_device *vfe_dev,
 	case VFE_READ_DMI_16BIT:
 	case VFE_READ_DMI_32BIT:
 	case VFE_READ_DMI_64BIT: {
-		if (reg_cfg_cmd->cmd_type == VFE_WRITE_DMI_64BIT ||
-					reg_cfg_cmd->cmd_type == VFE_READ_DMI_64BIT) {
+			if (reg_cfg_cmd->cmd_type == VFE_WRITE_DMI_64BIT ||
+	                    reg_cfg_cmd->cmd_type == VFE_READ_DMI_64BIT) {
 			if ((reg_cfg_cmd->u.dmi_info.hi_tbl_offset <=
 				reg_cfg_cmd->u.dmi_info.lo_tbl_offset) ||
 				(reg_cfg_cmd->u.dmi_info.hi_tbl_offset -
@@ -1015,8 +1015,7 @@ void msm_isp_reset_burst_count_and_frame_drop(
 	    stream_info->stream_type != BURST_STREAM) {
 		return;
 	}
-	if (stream_info->stream_type == BURST_STREAM &&
-	    stream_info->num_burst_capture != 0) {
+	if (stream_info->num_burst_capture != 0) {
 		stream_cfg_cmd.axi_stream_handle =
 			stream_info->stream_handle;
 		stream_cfg_cmd.burst_count =

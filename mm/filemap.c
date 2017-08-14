@@ -36,10 +36,6 @@
 #include <linux/cleancache.h>
 #include "internal.h"
 
-#ifdef CONFIG_SDP
-#include <sdp/cache_cleanup.h>
-#endif
-
 /*
  * FIXME: remove all knowledge of the buffer layer from the core VM
  */
@@ -117,11 +113,6 @@
 void __delete_from_page_cache(struct page *page)
 {
 	struct address_space *mapping = page->mapping;
-
-#ifdef CONFIG_SDP
-	if(mapping_sensitive(mapping))
-		sdp_page_cleanup(page);
-#endif
 
 	/*
 	 * if we're uptodate, flush out into the cleancache, otherwise
@@ -2451,6 +2442,11 @@ again:
 			break;
 		}
 
+		if (fatal_signal_pending(current)) {
+			status = -EINTR;
+			break;
+		}
+
 		status = a_ops->write_begin(file, mapping, pos, bytes, flags,
 						&page, &fsdata);
 		if (unlikely(status))
@@ -2491,10 +2487,6 @@ again:
 		written += copied;
 
 		balance_dirty_pages_ratelimited(mapping);
-		if (fatal_signal_pending(current)) {
-			status = -EINTR;
-			break;
-		}
 	} while (iov_iter_count(i));
 
 	return written ? written : status;

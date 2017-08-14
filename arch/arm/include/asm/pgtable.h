@@ -250,8 +250,7 @@ static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
 		__sync_icache_dcache(pteval);
 		ext |= PTE_EXT_NG;
 	}
-	
-		set_pte_ext(ptep, pteval, ext);
+	set_pte_ext(ptep, pteval, ext);
 }
 
 #ifdef CONFIG_TIMA_RKP_L2_GROUP

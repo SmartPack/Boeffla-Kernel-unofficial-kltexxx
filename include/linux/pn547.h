@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifndef _PN547_H_
-#define _PN547_H_
 
 #define PN547_MAGIC	0xE9
 
@@ -28,7 +26,6 @@
  */
 #define PN547_SET_PWR	_IOW(PN547_MAGIC, 0x01, unsigned int)
 
-#ifdef __KERNEL__
 struct pn547_i2c_platform_data {
 	void (*conf_gpio) (void);
 	int irq_gpio;
@@ -47,6 +44,3 @@ struct pn547_i2c_platform_data {
 	u32 firm_gpio_flags;
 #endif
 };
-#endif
-
-#endif

@@ -31,7 +31,6 @@
 #include <linux/gpio.h>
 #include <linux/sched_clock.h>
 
-
 #include <mach/udc.h>
 #include <mach/hardware.h>
 #include <mach/io.h>

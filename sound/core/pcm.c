@@ -1225,8 +1225,8 @@ static int snd_pcm_dev_disconnect(struct snd_device *device)
 			snd_pcm_stream_lock_irq(substream);
 			if (substream->runtime) {
 				substream->runtime->status->state = SNDRV_PCM_STATE_DISCONNECTED;
-					wake_up(&substream->runtime->sleep);
-					wake_up(&substream->runtime->tsleep);
+				wake_up(&substream->runtime->sleep);
+				wake_up(&substream->runtime->tsleep);
 			}
 			snd_pcm_stream_unlock_irq(substream);
 		}

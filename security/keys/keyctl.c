@@ -76,10 +76,6 @@ SYSCALL_DEFINE5(add_key, const char __user *, _type,
 	if (IS_ERR(description)) {
 		ret = PTR_ERR(description);
 		goto error;
-	} else if ((description[0] == '.') &&
-		   (strncmp(type, "keyring", 7) == 0)) {
-		ret = -EPERM;
-		goto error2;
 	}
 
 	/* pull the payload in if one was supplied */
@@ -380,37 +376,6 @@ long keyctl_revoke_key(key_serial_t id)
 
 	key_ref_put(key_ref);
 error:
-	return ret;
-}
-
-/*
- * Invalidate a key.
- *
- * The key must be grant the caller Invalidate permission for this to work.
- * The key and any links to the key will be automatically garbage collected
- * immediately.
- *
- * If successful, 0 is returned.
- */
-long keyctl_invalidate_key(key_serial_t id)
-{
-	key_ref_t key_ref;
-	long ret;
-
-	kenter("%d", id);
-
-	key_ref = lookup_user_key(id, 0, KEY_SEARCH);
-	if (IS_ERR(key_ref)) {
-		ret = PTR_ERR(key_ref);
-		goto error;
-	}
-
-	key_invalidate(key_ref_to_ptr(key_ref));
-	ret = 0;
-
-	key_ref_put(key_ref);
-error:
-	kleave(" = %ld", ret);
 	return ret;
 }
 
@@ -1658,9 +1623,6 @@ SYSCALL_DEFINE5(keyctl, int, option, unsigned long, arg2, unsigned long, arg3,
 			(const struct iovec __user *) arg3,
 			(unsigned) arg4,
 			(key_serial_t) arg5);
-
-	case KEYCTL_INVALIDATE:
-		return keyctl_invalidate_key((key_serial_t) arg2);
 
 	default:
 		return -EOPNOTSUPP;

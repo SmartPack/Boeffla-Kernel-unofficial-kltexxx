@@ -345,6 +345,7 @@ int __attribute__((weak)) get_user_pages_fast(unsigned long start,
 }
 EXPORT_SYMBOL_GPL(get_user_pages_fast);
 
+
 /**
  * get_cmdline() - copy the cmdline value to a buffer.
  * @task:     the task whose cmdline value to copy.

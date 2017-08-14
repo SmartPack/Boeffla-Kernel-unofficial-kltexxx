@@ -507,11 +507,6 @@ config MIN_DIRTY_THRESH_PAGES
 	  disables this option.)
 	  Do not use it if you unsure.
 
-config SDP_CACHE_CLEANUP
-	bool "SDP requirement. cache cleanup"
-	depends on SDP
-	default n
-
 config ZBUD
 	tristate "Low density storage for compressed pages"
 	default n
