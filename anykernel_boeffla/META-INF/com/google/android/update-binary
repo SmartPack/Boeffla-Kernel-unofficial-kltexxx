@@ -4,7 +4,7 @@
 #
 # Original and credits: osm0sis @ xda-developers
 #
-# Modified by Lord Boeffla, 30.06.2016
+# Modified by Lord Boeffla & sunilpaulmathew @ xda-developers.com
 
 OUTFD=/proc/self/fd/$2;
 ZIP="$3";
@@ -73,9 +73,9 @@ fi;
 chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 bb=/tmp/anykernel/tools/busybox;
 
-ui_print "###kernelname###";
+ui_print "Boeffla-Kernel-kltexxx-unofficial";
 ui_print " ";
-ui_print "###copyright###";
+ui_print "(c) sunilpaulmathew@xda-developers.com";
 ui_print " ";
 
 umount /system;

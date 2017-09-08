@@ -2,7 +2,7 @@
 #
 # Original and credits: osm0sis @ xda-developers
 #
-# Modified by Lord Boeffla, 05.12.2016
+# Modified by Lord Boeffla & sunilpaulmathew @ xda-developers.com
 
 ############### AnyKernel setup start ############### 
 
