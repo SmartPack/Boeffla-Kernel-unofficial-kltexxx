@@ -18,8 +18,8 @@ KERNEL_DATE="$(date +"%Y%m%d")"
 
 COMPILE_DTB="y"
 
-TOOLCHAIN="/home/sunil/android-ndk-r15b/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
-ARCHITECTURE=arm
+TOOLCHAIN="/home/sunil/android-ndk-r15c/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
+ARCHITECTURE="arm"
 
 COMPILER_FLAGS_KERNEL="-Wno-maybe-uninitialized -Wno-array-bounds"
 COMPILER_FLAGS_MODULE="-Wno-maybe-uninitialized -Wno-array-bounds"
