@@ -53,7 +53,7 @@ else
 	LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST
 fi
 
-LINUX_COMPILE_BY="Boeffla-Kernel-[sunilpaulmathew"
+LINUX_COMPILE_BY="Boeffla-Kernel-unofficial-[sunilpaulmathew"
 LINUX_COMPILE_HOST="xda-developers.com]"
 
 UTS_VERSION="#$VERSION"
