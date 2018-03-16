@@ -28,7 +28,7 @@
 # one variants at a time.
 #
 
-# 1. Properly locate toolchain (Line# 48)
+# 1. Properly locate toolchain (Line# 47)
 # 2. Select the 'KERNEL_VARIANT' (Line# 43)
 # 3. Open Terminal, ‘cd’ to the Kernel ‘root’ folder and run ‘. build_boeffla.sh’
 # 4. The output (anykernel zip) file will be generated in the ‘release_boeffla’ folder

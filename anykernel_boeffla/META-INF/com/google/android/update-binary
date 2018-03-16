@@ -68,9 +68,9 @@ if [ -f /tmp/anykernel/banner ]; then
   ui_print " ";
 fi;
 
-ui_print "Boeffla-Kernel-kltexxx-unofficial";
+ui_print "Boeffla-Kernel (unofficial) for Samsung Galaxy S5";
 ui_print " ";
-ui_print "(c) sunilpaulmathew@xda-developers.com";
+ui_print "...(c) sunilpaulmathew@xda-developers.com...";
 ui_print " ";
 
 umount /system 2>/dev/null;
