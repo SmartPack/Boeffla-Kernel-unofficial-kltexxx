@@ -54,6 +54,8 @@ KERNEL_DEFCONFIG="Boeffla_@$KERNEL_VARIANT@_defconfig"
 
 COMPILE_DTB="y"
 
+PREPARE_RELEASE="y"
+
 KERNEL_DATE="$(date +"%Y%m%d")"
 
 COMPILER_FLAGS_KERNEL="-Wno-maybe-uninitialized -Wno-array-bounds"
@@ -139,7 +141,16 @@ else
 			echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
 			cd anykernel_boeffla/ && zip -r9 $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip * -x README.md $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip
 			echo -e $COLOR_GREEN"\n cleaning...\n"$COLOR_NEUTRAL
-			cd .. && rm anykernel_boeffla/zImage && rm anykernel_boeffla/dtb && mv anykernel_boeffla/$KERNEL_NAME-* release_boeffla/
+			cd .. 
+			# check and create release folder
+			if [ ! -d "release_boeffla/" ]; then
+				mkdir release_boeffla/
+			fi
+			rm anykernel_boeffla/zImage && rm anykernel_boeffla/dtb && mv anykernel_boeffla/$KERNEL_NAME-* release_boeffla/
+			if [ "y" == "$PREPARE_RELEASE" ]; then
+				echo -e $COLOR_GREEN"\n Preparing for kernel release\n"$COLOR_NEUTRAL
+				cp release_boeffla/$KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip kernel-release/$KERNEL_NAME-$KERNEL_VARIANT.zip
+			fi
 			echo -e $COLOR_GREEN"\n everything done... please visit 'release_boeffla'...\n"$COLOR_NEUTRAL
 		else
 			echo -e $COLOR_GREEN"\n Building error... zImage not found...\n"$COLOR_NEUTRAL

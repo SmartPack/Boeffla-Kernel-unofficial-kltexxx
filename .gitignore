@@ -42,6 +42,7 @@ modules.builtin
 /Module.markers
 /Module.symvers
 /output_*
+/release_boeffla
 
 #
 # Debian directory (make deb-pkg)
