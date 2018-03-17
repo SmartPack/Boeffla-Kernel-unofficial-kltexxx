@@ -90,7 +90,7 @@ else
 			mkdir output_$KERNEL_VARIANT
 		fi
 		echo -e $COLOR_GREEN"\n building $KERNEL_NAME for $KERNEL_VARIANT\n"$COLOR_NEUTRAL
-		make -C $(pwd) O=output_$KERNEL_VARIANT $KERNEL_DEFCONFIG 
+		make -C $(pwd) O=output_$KERNEL_VARIANT CFLAGS_KERNEL="$COMPILER_FLAGS_KERNEL" CFLAGS_MODULE="$COMPILER_FLAGS_MODULE" $KERNEL_DEFCONFIG 
 		# updating kernel version
 		sed -i "s;lineageos;$KERNEL_VERSION;" output_$KERNEL_VARIANT/.config;
 		make -j$NUM_CPUS -C $(pwd) O=output_$KERNEL_VARIANT
