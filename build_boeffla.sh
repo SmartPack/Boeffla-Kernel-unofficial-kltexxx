@@ -119,25 +119,28 @@ else
 				mkdir anykernel_boeffla/modules/
 				if [ ! -d "anykernel_boeffla/modules/system/" ]; then
 					mkdir anykernel_boeffla/modules/system/
-					if [ ! -d "anykernel_boeffla/modules/system/lib/" ]; then
-						mkdir anykernel_boeffla/modules/system/lib/
-						if [ ! -d "anykernel_boeffla/modules/system/lib/modules/" ]; then
-							mkdir anykernel_boeffla/modules/system/lib/modules/
+					if [ ! -d "anykernel_boeffla/modules/system/vendor/" ]; then
+						mkdir anykernel_boeffla/modules/system/vendor/
+						if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/" ]; then
+							mkdir anykernel_boeffla/modules/system/vendor/lib/
+							if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/modules/" ]; then
+								mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+							fi
 						fi
 					fi
 				fi
 			fi
-			if [ -z "$(ls -A anykernel_boeffla/modules/system/lib/modules/)" ]; then
+			if [ -z "$(ls -A anykernel_boeffla/modules/system/vendor/lib/modules/)" ]; then
 				echo -e $COLOR_GREEN"\n “Preparing "modules" folder...\n"$COLOR_NEUTRAL
 			else
-				rm -r anykernel_boeffla/modules/system/lib/modules/*
+				rm -r anykernel_boeffla/modules/system/vendor/lib/modules/*
 			fi
 			echo -e $COLOR_GREEN"\n copying generated 'modules'\n"$COLOR_NEUTRAL
-			find output_$KERNEL_VARIANT -name '*.ko' -exec cp -av {} anykernel_boeffla/modules/system/lib/modules \;
+			find output_$KERNEL_VARIANT -name '*.ko' -exec cp -av {} anykernel_boeffla/modules/system/vendor/lib/modules \;
 			# set module permissions
-			chmod 644 anykernel_boeffla/modules/system/lib/modules/*
+			chmod 644 anykernel_boeffla/modules/system/vendor/lib/modules/*
 			# strip 'modules'
-			${TOOLCHAIN}strip --strip-unneeded anykernel_boeffla/modules/system/lib/modules/*
+			${TOOLCHAIN}strip --strip-unneeded anykernel_boeffla/modules/system/vendor/lib/modules/*
 			echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
 			cd anykernel_boeffla/ && zip -r9 $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip * -x README.md $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip
 			echo -e $COLOR_GREEN"\n cleaning...\n"$COLOR_NEUTRAL
