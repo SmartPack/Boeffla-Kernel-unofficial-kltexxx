@@ -44,7 +44,7 @@ KERNEL_VARIANT="kltekor" # options: klte, kltekor, kltekdi
 
 KERNEL_VERSION="beta-v1"
 
-TOOLCHAIN="/home/sunil/android-ndk-r15c/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
+TOOLCHAIN="/home/sunil/UBERTC-arm-eabi-8.0/bin/arm-linux-androideabi-"
 
 ARCHITECTURE="arm"
 
