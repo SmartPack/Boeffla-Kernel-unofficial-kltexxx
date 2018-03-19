@@ -1,5 +1,9 @@
 # Change-logs
 
+## 2. March 19, 2018
+*Release status: beta-v2*
+Changes: Switch to UBERTC-8.x (latest) toolchain. Properly enabled modules according to new android requirements (should be accessible in the config app).
+
 ## 1. March 17, 2018
 *Release status: beta-v1*
 The very first release for Android 8.1.0.
