@@ -117,12 +117,26 @@ else
 			# check and create 'modules' folder.
 			if [ ! -d "anykernel_boeffla/modules/" ]; then
 				mkdir anykernel_boeffla/modules/
+				mkdir anykernel_boeffla/modules/system/
+				mkdir anykernel_boeffla/modules/system/vendor/
+				mkdir anykernel_boeffla/modules/system/vendor/lib/
+				mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+			else
 				if [ ! -d "anykernel_boeffla/modules/system/" ]; then
 					mkdir anykernel_boeffla/modules/system/
+					mkdir anykernel_boeffla/modules/system/vendor/
+					mkdir anykernel_boeffla/modules/system/vendor/lib/
+					mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+				else
 					if [ ! -d "anykernel_boeffla/modules/system/vendor/" ]; then
 						mkdir anykernel_boeffla/modules/system/vendor/
+						mkdir anykernel_boeffla/modules/system/vendor/lib/
+						mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+					else
 						if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/" ]; then
 							mkdir anykernel_boeffla/modules/system/vendor/lib/
+							mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+						else
 							if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/modules/" ]; then
 								mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
 							fi
