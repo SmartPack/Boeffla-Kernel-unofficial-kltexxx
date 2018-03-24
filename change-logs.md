@@ -1,5 +1,9 @@
 # Change-logs
 
+## 3. March 24, 2018
+*Release status: beta-v3*
+Changes: Up-to-date with Linage-OS source code.
+
 ## 2. March 19, 2018
 *Release status: beta-v2*
 Changes: Switch to UBERTC-8.x (latest) toolchain. Properly enabled modules according to new android requirements (should be accessible in the config app).
