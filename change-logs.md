@@ -1,5 +1,9 @@
 # Change-logs
 
+## 4. March 30, 2018
+*Release status: beta-v4*
+Changes: Removed wake-up gestures (Exp). Up-to-date with Linage-OS source code. Ext4 tweaks and dynamic fsync are disabled by default.
+
 ## 3. March 24, 2018
 *Release status: beta-v3*
 Changes: Up-to-date with Linage-OS source code.
