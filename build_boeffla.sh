@@ -40,7 +40,7 @@
 
 KERNEL_NAME="Boeffla-Kernel"
 
-KERNEL_VARIANT="kltekor" # options: klte, kltekor, kltekdi
+KERNEL_VARIANT="kltekor" # options: klte, kltekor, klteduos, kltekdi
 
 KERNEL_VERSION="beta-v4"
 
