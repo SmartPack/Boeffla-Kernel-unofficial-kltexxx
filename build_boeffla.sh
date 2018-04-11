@@ -42,7 +42,7 @@ KERNEL_NAME="Boeffla-Kernel"
 
 KERNEL_VARIANT="kltekor" # options: klte, kltekor, klteduos, kltekdi
 
-KERNEL_VERSION="beta-v4"
+KERNEL_VERSION="beta-v5"
 
 TOOLCHAIN="/home/sunil/UBERTC-arm-eabi-8.0/bin/arm-linux-androideabi-"
 

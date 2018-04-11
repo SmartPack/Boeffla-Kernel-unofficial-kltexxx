@@ -1,5 +1,9 @@
 # Change-logs
 
+## 5. April 11, 2018
+*Release status: beta-v5*
+Changes: Some modifications into Interactive cpufreq gov (from the mainstream Linux). Added klteduos support. Up-to-date with Linage-OS source code.
+
 ## 4. March 30, 2018
 *Release status: beta-v4*
 Changes: Removed wake-up gestures (Exp). Up-to-date with Linage-OS source code. Ext4 tweaks and dynamic fsync are disabled by default.
