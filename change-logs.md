@@ -1,5 +1,9 @@
 # Change-logs
 
+## 6. April 22, 2018
+*Release status: beta-v6*
+Changes: Up-to-date with Linage-OS source code.
+
 ## 5. April 11, 2018
 *Release status: beta-v5*
 Changes: Some modifications into Interactive cpufreq gov (from the mainstream Linux). Added klteduos support. Up-to-date with Linage-OS source code.
