@@ -1,5 +1,9 @@
 # Change-logs
 
+## 8. May 8, 2018
+*Release status: beta-v8*
+Changes: Update busybox to version 1.28.3 (credits to Lord Boeffla). Modified charge level a bit to make it compatible with SmartPack-Kernel Manager (and possibly KA in future) without touching the functionality of Boeffla-Config. Up-to-date with Linage-OS source code.
+
 ## 7. May 1, 2018
 *Release status: beta-v7*
 Changes: Added 268 MHz CPU under-clocked frequency cycle (and added proper configuration in Boeffla-Config). Modified headphone and speaker gain in boeffla sound a bit to make it compatible with SmartPack-Kernel Manager (and possibly KA in future) without touching the functionality of Boeffla-Config. Up-to-date with Linage-OS source code.
