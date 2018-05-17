@@ -22,7 +22,7 @@ KERNEL_SPECS="g900f;cm;cm14.0;http://kernel.boeffla.de/sgs5/boeffla-kernel-cm/;b
 KERNEL_FEATURES="-3-4-5-6-7-9-"
 
 # path to kernel libraries
-LIBPATH="/system/vendor/lib/modules"
+# LIBPATH="/system/vendor/lib/modules"
 
 # block devices
 SYSTEM_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/system"

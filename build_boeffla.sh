@@ -54,6 +54,8 @@ KERNEL_DEFCONFIG="Boeffla_@$KERNEL_VARIANT@_defconfig"
 
 COMPILE_DTB="y"
 
+PREPARE_MODULES=""
+
 PREPARE_RELEASE="y"
 
 KERNEL_DATE="$(date +"%Y%m%d")"
@@ -114,47 +116,50 @@ else
 					mv -f output_$KERNEL_VARIANT/arch/arm/boot/dt.img anykernel_boeffla/dtb
 				fi
 			fi
-			# check and create 'modules' folder.
-			if [ ! -d "anykernel_boeffla/modules/" ]; then
-				mkdir anykernel_boeffla/modules/
-				mkdir anykernel_boeffla/modules/system/
-				mkdir anykernel_boeffla/modules/system/vendor/
-				mkdir anykernel_boeffla/modules/system/vendor/lib/
-				mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
-			else
-				if [ ! -d "anykernel_boeffla/modules/system/" ]; then
+			# prepare modules if required
+			if [ "y" == "PREPARE_MODULES" ]; then
+				# check and create 'modules' folder.
+				if [ ! -d "anykernel_boeffla/modules/" ]; then
+					mkdir anykernel_boeffla/modules/
 					mkdir anykernel_boeffla/modules/system/
 					mkdir anykernel_boeffla/modules/system/vendor/
 					mkdir anykernel_boeffla/modules/system/vendor/lib/
 					mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
 				else
-					if [ ! -d "anykernel_boeffla/modules/system/vendor/" ]; then
+					if [ ! -d "anykernel_boeffla/modules/system/" ]; then
+						mkdir anykernel_boeffla/modules/system/
 						mkdir anykernel_boeffla/modules/system/vendor/
 						mkdir anykernel_boeffla/modules/system/vendor/lib/
 						mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
 					else
-						if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/" ]; then
+						if [ ! -d "anykernel_boeffla/modules/system/vendor/" ]; then
+							mkdir anykernel_boeffla/modules/system/vendor/
 							mkdir anykernel_boeffla/modules/system/vendor/lib/
 							mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
 						else
-							if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/modules/" ]; then
+							if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/" ]; then
+								mkdir anykernel_boeffla/modules/system/vendor/lib/
 								mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+							else
+								if [ ! -d "anykernel_boeffla/modules/system/vendor/lib/modules/" ]; then
+									mkdir anykernel_boeffla/modules/system/vendor/lib/modules/
+								fi
 							fi
 						fi
 					fi
 				fi
+				if [ -z "$(ls -A anykernel_boeffla/modules/system/vendor/lib/modules/)" ]; then
+					echo -e $COLOR_GREEN"\n “Preparing "modules" folder...\n"$COLOR_NEUTRAL
+				else
+					rm -r anykernel_boeffla/modules/system/vendor/lib/modules/*
+				fi
+				echo -e $COLOR_GREEN"\n copying generated 'modules'\n"$COLOR_NEUTRAL
+				find output_$KERNEL_VARIANT -name '*.ko' -exec cp -av {} anykernel_boeffla/modules/system/vendor/lib/modules \;
+				# set module permissions
+				chmod 644 anykernel_boeffla/modules/system/vendor/lib/modules/*
+				# strip 'modules'
+				${TOOLCHAIN}strip --strip-unneeded anykernel_boeffla/modules/system/vendor/lib/modules/*
 			fi
-			if [ -z "$(ls -A anykernel_boeffla/modules/system/vendor/lib/modules/)" ]; then
-				echo -e $COLOR_GREEN"\n “Preparing "modules" folder...\n"$COLOR_NEUTRAL
-			else
-				rm -r anykernel_boeffla/modules/system/vendor/lib/modules/*
-			fi
-			echo -e $COLOR_GREEN"\n copying generated 'modules'\n"$COLOR_NEUTRAL
-			find output_$KERNEL_VARIANT -name '*.ko' -exec cp -av {} anykernel_boeffla/modules/system/vendor/lib/modules \;
-			# set module permissions
-			chmod 644 anykernel_boeffla/modules/system/vendor/lib/modules/*
-			# strip 'modules'
-			${TOOLCHAIN}strip --strip-unneeded anykernel_boeffla/modules/system/vendor/lib/modules/*
 			echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
 			cd anykernel_boeffla/ && zip -r9 $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip * -x README.md $KERNEL_NAME-$KERNEL_VARIANT-$KERNEL_VERSION-$KERNEL_DATE.zip
 			echo -e $COLOR_GREEN"\n cleaning...\n"$COLOR_NEUTRAL
