@@ -889,6 +889,23 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
+	if [ "blu_active - standard" == "$2" ]; then
+		echo "20000" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/above_hispeed_delay
+		echo "0" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/align_windows
+		echo "0" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane
+		echo "50" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/fastlane_threshold
+		echo "99" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/go_hispeed_load
+		echo "1190400" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/hispeed_freq
+		echo "0" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/io_is_busy
+		echo "80000" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/min_sample_time
+		echo "90" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/target_loads
+		echo "20000" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_rate
+		echo "80000" > /sys/devices/system/cpu/cpu0/cpufreq/blu_active/timer_slack
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	if [ "zzmoove - battery" == "$2" ]; then
 		echo "4" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
 
