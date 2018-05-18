@@ -1,5 +1,9 @@
 # Change-logs
 
+## 9. May 18, 2018
+*Release status: beta-v9*
+Changes: Fixed off-line charging issues in klte and kltekor. Fixed occasional booting issues in kltekor. Added blu_active CPU governor (credits: engstk). Disabled modules, without losing CIFS, NTFS, XBox and OTG-Ethernet (but no NFS) supports. Enabled 268 MHz CPU under-clocked frequency cycle by default. A lot of work to improve the over-all stability and performance.
+
 ## 8. May 8, 2018
 *Release status: beta-v8*
 Changes: Update busybox to version 1.28.3 (credits to Lord Boeffla). Modified charge level a bit to make it compatible with SmartPack-Kernel Manager (and possibly KA in future) without touching the functionality of Boeffla-Config. Up-to-date with Linage-OS source code.
