@@ -36,7 +36,7 @@
 
 KERNEL_NAME="Boeffla-Kernel"
 
-KERNEL_VARIANT="kltekor" # options: klte, kltekor, klteduos & all (build all the variants)
+KERNEL_VARIANT="kltekor" # options: klte, kltekor, klteduos, kltekdi & all (build all the variants)
 
 KERNEL_VERSION="beta-v9"
 
@@ -437,6 +437,93 @@ elif [ "all" == "$KERNEL_VARIANT" ]; then
 		echo -e $COLOR_GREEN"\n everything done... please visit '$RELEASE_DIR'...\n"$COLOR_NEUTRAL
 	else
 		echo -e $COLOR_RED"\n Building for klteduos is failed. Please fix the issues and try again...\n"$COLOR_NEUTRAL
+	fi
+	# kltekdi
+	if [ -e output_kltekdi/ ]; then
+		if [ -e output_kltekdi/.config ]; then
+			rm -f output_kltekdi/.config
+			if [ -e output_kltekdi/arch/arm/boot/zImage ]; then
+				rm -f output_kltekdi/arch/arm/boot/zImage
+			fi
+		fi
+	else
+		mkdir output_kltekdi
+	fi
+	echo -e $COLOR_GREEN"\n building $KERNEL_NAME $KERNEL_VERSION for kltekdi\n"$COLOR_NEUTRAL
+	make -C $(pwd) O=output_kltekdi CFLAGS_KERNEL="$COMPILER_FLAGS_KERNEL" CFLAGS_MODULE="$COMPILER_FLAGS_MODULE" Boeffla_@kltekdi@_defconfig 
+	# updating kernel version
+	sed -i "s;lineageos;$KERNEL_VERSION;" output_kltekdi/.config;
+	make -j$NUM_CPUS -C $(pwd) O=output_kltekdi
+	if [ -e output_kltekdi/arch/arm/boot/zImage ]; then
+		echo -e $COLOR_GREEN"\n copying zImage to anykernel directory\n"$COLOR_NEUTRAL
+		cp output_kltekdi/arch/arm/boot/zImage $ANYKERNEL_DIR
+		# compile dtb if required
+		if [ "y" == "$COMPILE_DTB" ]; then
+			echo -e $COLOR_GREEN"\n compiling device tree blob (dtb) for kltekdi\n"$COLOR_NEUTRAL
+			if [ -f output_kltekdi/arch/arm/boot/dt.img ]; then
+				rm -f output_kltekdi/arch/arm/boot/dt.img
+			fi
+			chmod 777 tools_boeffla/dtbToolCM
+			tools_boeffla/dtbToolCM -2 -o output_kltekdi/arch/arm/boot/dt.img -s 2048 -p output_kltekdi/scripts/dtc/ output_kltekdi/arch/arm/boot/
+			# removing old dtb (if any)
+			if [ -f $ANYKERNEL_DIR/dtb ]; then
+				rm -f $ANYKERNEL_DIR/dtb
+			fi
+			# copying generated dtb to anykernel directory
+			if [ -e output_kltekdi/arch/arm/boot/dt.img ]; then
+				mv -f output_kltekdi/arch/arm/boot/dt.img $ANYKERNEL_DIR/dtb
+			fi
+		fi
+		# prepare modules if required
+		if [ "y" == "$PREPARE_MODULES" ]; then
+			# check and create 'modules' folder.
+			if [ ! -d "$MODULES_DIR" ]; then
+				mkdir $MODULES_DIR
+				mkdir $MODULES_DIR/system/
+				mkdir $MODULES_DIR/system/vendor/
+				mkdir $MODULES_DIR/system/vendor/lib/
+				mkdir $MODULES_DIR/system/vendor/lib/modules/
+			elif [ ! -d "$MODULES_DIR/system/" ]; then
+				mkdir $MODULES_DIR/system/
+				mkdir $MODULES_DIR/system/vendor/
+				mkdir $MODULES_DIR/system/vendor/lib/
+				mkdir $MODULES_DIR/system/vendor/lib/modules/
+			elif [ ! -d "$MODULES_DIR/system/vendor/" ]; then
+				mkdir $MODULES_DIR/system/vendor/
+				mkdir $MODULES_DIR/system/vendor/lib/
+				mkdir $MODULES_DIR/system/vendor/lib/modules/
+			elif [ ! -d "$MODULES_DIR/system/vendor/lib/" ]; then
+				mkdir $MODULES_DIR/system/vendor/lib/
+				mkdir $MODULES_DIR/system/vendor/lib/modules/
+			elif [ ! -d "$MODULES_DIR/system/vendor/lib/modules/" ]; then
+				mkdir $MODULES_DIR/system/vendor/lib/modules/
+			fi
+			if [ -z "$(ls -A $MODULES_DIR/system/vendor/lib/modules/)" ]; then
+				echo -e $COLOR_GREEN"\n “Preparing "modules" folder...\n"$COLOR_NEUTRAL
+			else
+				rm -r $MODULES_DIR/system/vendor/lib/modules/*
+			fi
+			echo -e $COLOR_GREEN"\n copying generated 'modules'\n"$COLOR_NEUTRAL
+			find output_kltekdi -name '*.ko' -exec cp -av {} $MODULES_DIR/system/vendor/lib/modules \;
+			# set module permissions
+			chmod 644 $MODULES_DIR/system/vendor/lib/modules/*
+			# strip 'modules'
+			${TOOLCHAIN}strip --strip-unneeded $MODULES_DIR/system/vendor/lib/modules/*
+		fi
+		echo -e $COLOR_GREEN"\n generating recovery flashable zip file\n"$COLOR_NEUTRAL
+		cd $ANYKERNEL_DIR && zip -r9 $KERNEL_NAME-kltekdi-$KERNEL_VERSION-$KERNEL_DATE.zip * -x README.md $KERNEL_NAME-kltekdi-$KERNEL_VERSION-$KERNEL_DATE.zip
+		echo -e $COLOR_GREEN"\n cleaning...\n"$COLOR_NEUTRAL
+		cd .. 
+		# check and create release folder
+		if [ ! -d "$RELEASE_DIR" ]; then
+			mkdir $RELEASE_DIR
+		fi
+		rm $ANYKERNEL_DIR/zImage && rm $ANYKERNEL_DIR/dtb && mv $ANYKERNEL_DIR/$KERNEL_NAME-* $RELEASE_DIR
+		echo -e $COLOR_GREEN"\n Preparing for kernel release\n"$COLOR_NEUTRAL
+		cp $RELEASE_DIR/$KERNEL_NAME-kltekdi-$KERNEL_VERSION-$KERNEL_DATE.zip kernel-release/$KERNEL_NAME-kltekdi.zip
+		echo -e $COLOR_GREEN"\n everything done... please visit '$RELEASE_DIR'...\n"$COLOR_NEUTRAL
+	else
+		echo -e $COLOR_RED"\n Building for kltekdi is failed. Please fix the issues and try again...\n"$COLOR_NEUTRAL
 	fi
 else
 	echo -e $COLOR_GREEN"\n '$KERNEL_VARIANT' is not a supported variant... please check...\n"$COLOR_NEUTRAL
