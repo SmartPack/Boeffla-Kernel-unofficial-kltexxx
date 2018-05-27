@@ -1,5 +1,9 @@
 # Change-logs
 
+## 10. May 27, 2018
+*Release status: beta-v10*
+Changes: Added kltekdi to the supported device list. Merged recent changes from osm0sis's Anykernel repo. Up-to-date with Linage-OS source code.
+
 ## 9. May 18, 2018
 *Release status: beta-v9*
 Changes: Fixed off-line charging issues in klte and kltekor. Fixed occasional booting issues in kltekor. Added blu_active CPU governor (credits: engstk). Disabled modules, without losing CIFS, NTFS, XBox and OTG-Ethernet (but no NFS) supports. Enabled 268 MHz CPU under-clocked frequency cycle by default. A lot of work to improve the over-all stability and performance.
