@@ -6,7 +6,9 @@
 
 ############### AnyKernel setup start ############### 
 
-# EDIFY properties
+## AnyKernel setup
+# begin properties
+properties() { '
 do.devicecheck=1
 do.initd=0
 do.modules=0
@@ -26,7 +28,7 @@ device.name12=kltekdi
 device.name13=kltedv
 device.name14=kltespr
 device.name15=
-# end properties
+'; } # end properties
 
 # shell variables
 block=/dev/block/platform/msm_sdcc.1/by-name/boot;
