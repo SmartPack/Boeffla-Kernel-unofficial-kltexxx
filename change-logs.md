@@ -1,5 +1,9 @@
 # Change-logs
 
+## 11. June 30, 2018
+*Release status: beta-v11*
+Changes: Added kltedv (common build for SM-G900I/P) to the supported device list. Added Boeffla Generic wakelock blocked v1.1.0. Update busybox to version 1.28.4 (credits: Lord Boeffla). Fixed cpufreq interactive using higher frequencies. Merged recent changes from osm0sis's Anykernel repo. Up-to-date with Linage-OS source code.
+
 ## 10. May 27, 2018
 *Release status: beta-v10*
 Changes: Added kltekdi to the supported device list. Merged recent changes from osm0sis's Anykernel repo. Up-to-date with Linage-OS source code.
