@@ -1,5 +1,9 @@
 # Change-logs
 
+## 13. August 02, 2018
+*Release status: beta-v13*
+Changes: Built using the latest GCC 8.2 (Bleeding edge toolchain). Optimizations to work with new toolchain.
+
 ## 12. July 27, 2018
 *Release status: beta-v12*
 Changes: Disabled fake kernel update message from Boeffla-Config (thanks to Lord Boeffla). Up-to-date with Linage-OS source code.
