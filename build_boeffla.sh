@@ -40,7 +40,7 @@ KERNEL_VARIANT="kltekor" # options: klte, kltekor, kltedv, klteduos, kltekdi & a
 
 KERNEL_VERSION="beta-v12"
 
-TOOLCHAIN="/home/sunil/UBERTC-arm-eabi-8.0/bin/arm-linux-androideabi-"
+TOOLCHAIN="/home/sunil/UBERTC-arm-eabi-8.2/bin/arm-none-eabi-"
 
 ARCHITECTURE="arm"
 
