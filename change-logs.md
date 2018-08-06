@@ -1,5 +1,9 @@
 # Change-logs
 
+## 14. August 06, 2018
+*Release status: beta-v14*
+Up-to-date with Linage-OS source code.
+
 ## 13. August 02, 2018
 *Release status: beta-v13*
 Changes: Built using the latest GCC 8.2 (Bleeding edge toolchain). Optimizations to work with new toolchain.
