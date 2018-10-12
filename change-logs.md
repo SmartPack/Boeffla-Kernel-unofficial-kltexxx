@@ -1,7 +1,7 @@
 # Change-logs
 
 ## 17. October 09, 2018
-*Release status: beta-v17*
+*Release status: stable-v17*
 Up-to-date with Linage-OS source code. Update busybox to version 1.29.3 (credits: Lord Boeffla).
 
 ## 16. August 25, 2018
