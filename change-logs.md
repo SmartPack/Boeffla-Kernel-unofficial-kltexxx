@@ -1,5 +1,9 @@
 # Change-logs
 
+## 18. November 11, 2018
+*Release status: stable-v18*
+Add control over display minimum backlight (default: 15). Merged recent changes from osm0sis's Anykernel repo. Up-to-date with Linage-OS source code.
+
 ## 17. October 09, 2018
 *Release status: stable-v17*
 Up-to-date with Linage-OS source code. Update busybox to version 1.29.3 (credits: Lord Boeffla).
