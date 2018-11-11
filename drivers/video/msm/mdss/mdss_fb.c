@@ -64,7 +64,7 @@
 #define MDSS_FB_NUM 2
 #endif
 
-int backlight_min = 0;
+int backlight_min = 15;
 module_param(backlight_min, int, 0644);
 
 #define MAX_FBI_LIST 32
