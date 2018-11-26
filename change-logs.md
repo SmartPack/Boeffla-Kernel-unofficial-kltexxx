@@ -1,5 +1,9 @@
 # Change-logs
 
+## 19. November 26, 2018
+*Release status: stable-v19*
+Up-to-date with Linage-OS source code.
+
 ## 18. November 11, 2018
 *Release status: stable-v18*
 Add control over display minimum backlight (default: 15). Merged recent changes from osm0sis's Anykernel repo. Up-to-date with Linage-OS source code.
